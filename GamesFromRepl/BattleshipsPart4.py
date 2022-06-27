@@ -16,10 +16,10 @@ for x in xs:
   for y in ys:
     grid.append([x,y])
 def inlist(my_list, item):
-  o=0
+  i=0
   for counter in my_list:
     if item in counter:
-      o=o+1
+      i=i+1
       return True
   return False    
 for xx in range(1, 9):
@@ -39,10 +39,10 @@ for xx in range(7,11):
   combi5.append([[xx,6],[xx,7],[xx,8],[xx,9],[xx,10]])
 def ships(whichone,index):
     whichone=whichone.split()
-    j=0
+    i=0
     for counter in whichone:
-      whichone[j]=int(whichone[j])
-      j=j+1
+      whichone[i]=int(whichone[i])
+      i=i+1
     if index == "three":
       l1=[whichone[0],whichone[1]]
       l2=[whichone[2],whichone[3]]
@@ -66,9 +66,9 @@ def ships(whichone,index):
     return whichone  
 playerCorrect = True
 c_grid=grid    
-selected=True
+ship_creation=True
 playerCorrect=True
-while selected:
+while ship_creation:
   choice1=random.choice(combi3)
   choice2=random.choice(combi3)
   choice3=random.choice(combi3)
@@ -85,14 +85,14 @@ while selected:
       if location1 == location2:
         duplicated=duplicated+1
   if duplicated ==17:
-    selected = False      
+    ship_creation = False      
     while True:
       try:
         while playerCorrect:
           pChoice1=input("Enter the three coordinates of your first ship seperated by a space: \n")
           pChoice2=input("Enter the three coordinates of your second ship seperated by a space: \n")
           pChoice3=input("Enter the three coordinates of your third ship seperated by a space: \n")
-          pChoice4=input("Enter the four coordinates of your fourth ship seperated by a space: \n")
+          pChoice4=input("Enter the three coordinates of your fourth ship seperated by a space: \n")
           pChoice5=input("Enter the five coordinates of your fifth ship seperated by a space: \n")
           pChoice1=ships(pChoice1,"three")
           pChoice2=ships(pChoice2,"three")
@@ -145,8 +145,8 @@ while selected:
       except:
         print("Mistakes in coordinates place again. It errored")
 i=0        
-continuing=True
-while continuing:
+playing=True
+while playing:
   ii=ii+1
   print("Round",ii)
   print("Computer has",len(c_Choices),"ships left")
@@ -184,7 +184,7 @@ while continuing:
         c_Choices[h].remove(crd)
         break
       else:
-        h=h+1 
+        h+=1
   else:
     print("miss")
     miss=miss+1
@@ -194,7 +194,7 @@ while continuing:
       c_Choices.remove(counter)
   if not c_Choices:    
     print("Congrats you win, it took you ",ii,"Attempts")
-    continuing=False
+    playing=False
     break
   c_fire=random.choice(c_grid)
   computer_fired.append(c_fire)
@@ -212,4 +212,4 @@ while continuing:
     print("Computer misses")
   if not p_Choices:
     print(f"Computer wins after {ii} attempts")
-    continuing=False        
+    playing=False        
