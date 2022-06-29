@@ -22,6 +22,19 @@ class Battleship:
         else:
             print("Miss") 
             return False   
-            
 
+hits=[]
+hit_numbers=[]
+crd=[1,1]
+crd_number=crd[0]*10+crd[1]
+hit_length=len(hits)
+if hit_length == 0:
+    hits.append(crd) 
+    hit_numbers.append(crd_number)    
+elif hit_length == 1:
+    if crd_number > hit_numbers:
+        pass
+            
+print(crd_number)            
+print(hits)
      

@@ -36,7 +36,105 @@ class Battleship:
             return True
         else:
             return False   
-
+def ai_mode1():
+  global hit_crd
+  global c_fire
+  global computer_fired
+  global ai_attempts
+  global c_grid
+  c_fire=[hit_crd[0],hit_crd[1]+1]
+  if c_fire not in c_grid:
+    ai_attempts=2
+    ai_mode2()
+  else:  
+    print(f"Computer fired at {c_fire}")
+    computer_fired.append(c_fire)
+    c_grid.remove(c_fire)
+    if player_ship1.hit(c_fire):
+      pass
+    elif player_ship2.hit(c_fire):
+      pass
+    elif player_ship3.hit(c_fire):
+      pass
+    elif player_ship4.hit(c_fire):
+      pass
+    elif player_ship5.hit(c_fire):
+      pass
+def ai_mode2():
+  global hit_crd
+  global c_fire
+  global computer_fired
+  global ai_attempts
+  global c_grid
+  c_fire=[hit_crd[0],hit_crd[1]-1]
+  if c_fire not in c_grid:
+    ai_attempts=3
+    ai_mode3()
+  else:  
+    print(f"Computer fired at {c_fire}")
+    computer_fired.append(c_fire)
+    c_grid.remove(c_fire)
+    if player_ship1.hit(c_fire):
+      pass
+    elif player_ship2.hit(c_fire):
+      pass
+    elif player_ship3.hit(c_fire):
+      pass
+    elif player_ship4.hit(c_fire):
+      pass
+    elif player_ship5.hit(c_fire):
+      pass  
+def ai_mode3():
+  global hit_crd
+  global c_fire
+  global computer_fired
+  global ai_attempts
+  global c_grid
+  c_fire=[hit_crd[0]+1,hit_crd[1]]
+  if c_fire not in c_grid:
+    ai_attempts=4
+    ai_mode4()
+  else:  
+    print(f"Computer fired at {c_fire}")
+    computer_fired.append(c_fire)
+    c_grid.remove(c_fire)
+    if player_ship1.hit(c_fire):
+      pass
+    elif player_ship2.hit(c_fire):
+      pass
+    elif player_ship3.hit(c_fire):
+      pass
+    elif player_ship4.hit(c_fire):
+      pass
+    elif player_ship5.hit(c_fire):
+      pass  
+def ai_mode4():
+  global hit_crd
+  global c_fire
+  global computer_fired
+  global ai_attempts
+  global c_grid
+  c_fire=[hit_crd[0]-1,hit_crd[1]]
+  if c_fire not in c_grid:
+    ai_attempts=0
+    c_fire=random.choice(c_grid)
+    computer_fired.append(c_fire)
+    c_grid.remove(c_fire)
+    print(f"Computer fires at {c_fire}")
+  else:  
+    print(f"Computer fired at {c_fire}")
+    computer_fired.append(c_fire)
+    c_grid.remove(c_fire)
+    if player_ship1.hit(c_fire):
+      pass
+    elif player_ship2.hit(c_fire):
+      pass
+    elif player_ship3.hit(c_fire):
+      pass
+    elif player_ship4.hit(c_fire):
+      pass
+    elif player_ship5.hit(c_fire):
+      pass      
 #grid formation
 for x in xs:
   for y in ys:
@@ -48,21 +146,18 @@ def inlist(my_list, item):
       i=i+1
       return True
   return False    
-for xx in range(1, 9):
+for xx in range(1, 11):
   for yy in range(1, 9):
    combi3.append([[xx, yy], [xx, yy + 1], [xx, yy + 2]])
+for yy in range(1,11):
+  for xx in range(1,9):
    combi3.append([[xx, yy], [xx + 1, yy], [xx + 2, yy]])
-combi3.append([[10,8],[10,9],[10,10]])
-combi3.append([[9,8],[9,9],[9,10]])
-for xx in range(1, 7):
+for xx in range(1, 11):
   for yy in range(1, 7):
     combi5.append([[xx, yy], [xx, yy + 1], [xx, yy + 2], [xx, yy + 3],[xx, yy + 4]])
+for yy in range(1, 11):
+  for xx in range(1, 7):
     combi5.append([[xx, yy], [xx + 1, yy], [xx + 2, yy], [xx + 3, yy],[xx + 4, yy]])
-for xx in range(7,11):
-  combi5.append([[xx,3],[xx,4],[xx,5],[xx,6],[xx,7]])
-  combi5.append([[xx,4],[xx,5],[xx,6],[xx,7],[xx,8]])
-  combi5.append([[xx,5],[xx,6],[xx,7],[xx,8],[xx,9]])
-  combi5.append([[xx,6],[xx,7],[xx,8],[xx,9],[xx,10]])
 playerCorrect = True
 c_grid=grid    
 ship_creation=True
@@ -88,7 +183,7 @@ while ship_creation:
     while True:
       try:
         while playerCorrect:
-          player_ship1=Battleship("player",3,"1 1 1 2 1 3")#input("Enter the three coordinates of your first ship seperated by a space: \n"))
+          player_ship1=Battleship("player",3,"10 1 10 2 10 3")#input("Enter the three coordinates of your first ship seperated by a space: \n"))
           player_ship2=Battleship("player",3,"2 1 2 2 2 3")#input("Enter the three coordinates of your second ship seperated by a space: \n"))
           player_ship3=Battleship("player",3,"3 1 3 2 3 3")#input("Enter the three coordinates of your third ship seperated by a space: \n"))
           player_ship4=Battleship("player",3,"4 1 4 2 4 3")#input("Enter the three coordinates of your fourth ship seperated by a space: \n"))
@@ -141,10 +236,12 @@ while ship_creation:
 player_ships=5
 computer_ships=5 
 print(c_Choices) 
+ai_attempts=0
 computer_fleet=[computer_ship1.sunk, computer_ship2.sunk, computer_ship3.sunk, computer_ship4.sunk, computer_ship5.sunk]
 player_fleet=[player_ship1.sunk,player_ship2.sunk,player_ship3.sunk,player_ship4.sunk,player_ship5.sunk]
 playing=True
-just_hit=False 
+ai_mode=False 
+hit_crd=[]
 while playing:
   ii=ii+1
   print("Round",ii)
@@ -201,22 +298,50 @@ while playing:
     print(f"Congrats you win, it took you {ii} Attempts")
     playing=False
     break
-  c_fire=random.choice(c_grid)
-  computer_fired.append(c_fire)
-  c_grid.remove(c_fire)
-  print(f"Computer fires at {c_fire}")
-  if player_ship1.hit(c_fire):
-    pass
-  elif player_ship2.hit(c_fire):
-    pass
-  elif player_ship3.hit(c_fire):
-    pass
-  elif player_ship4.hit(c_fire):
-    pass
-  elif player_ship5.hit(c_fire):
-    pass
-  else:
-    print("Computer misses")
+  if ai_mode == True:
+    if current_player_ships > player_ships:
+      ai_mode=False
+    if ai_attempts==1:
+      ai_mode1()
+    elif ai_attempts==2:
+      ai_mode2()
+    elif ai_attempts==3:
+      ai_mode3()
+    elif ai_attempts==4:
+      ai_mode4() 
+  else:  
+    hit_crd=[]
+    c_fire=[2,1]#random.choice(c_grid)
+    computer_fired.append(c_fire)
+    c_grid.remove(c_fire)
+    print(f"Computer fires at {c_fire}")
+    if player_ship1.hit(c_fire):
+      current_player_ships=player_ships
+      ai_mode=True
+      ai_attempts=0
+      hit_crd=c_fire
+    elif player_ship2.hit(c_fire):
+      current_player_ships=player_ships
+      ai_mode=True
+      ai_attempts=0
+      hit_crd=c_fire
+    elif player_ship3.hit(c_fire):
+      current_player_ships=player_ships
+      ai_mode=True
+      ai_attempts=0
+      hit_crd=c_fire
+    elif player_ship4.hit(c_fire):
+      current_player_ships=player_ships
+      ai_mode=True
+      ai_attempts=0
+      hit_crd=c_fire
+    elif player_ship5.hit(c_fire):
+      current_player_ships=player_ships
+      ai_mode=True
+      ai_attempts=0
+      hit_crd=c_fire
+    else:
+      print("Computer misses")
   player_fleet=[player_ship1.sunk,player_ship2.sunk,player_ship3.sunk,player_ship4.sunk,player_ship5.sunk]  
   player_ships=5   
   for counter in player_fleet:
@@ -224,4 +349,5 @@ while playing:
       player_ships-=1
   if  player_ships == 0: 
     print(f"Computer wins after {ii} attempts")
-    playing=False        
+    playing=False       
+  ai_attempts+=1   
