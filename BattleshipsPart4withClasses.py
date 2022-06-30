@@ -42,6 +42,9 @@ def ai_mode1():
   global computer_fired
   global ai_attempts
   global c_grid
+  global second_hit
+  global technique_to_hit
+  
   c_fire=[hit_crd[0],hit_crd[1]+1]
   if c_fire not in c_grid:
     ai_attempts=2
@@ -51,21 +54,28 @@ def ai_mode1():
     computer_fired.append(c_fire)
     c_grid.remove(c_fire)
     if player_ship1.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=1
     elif player_ship2.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=1
     elif player_ship3.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=1
     elif player_ship4.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=1
     elif player_ship5.hit(c_fire):
-      pass
+     second_hit=True
+    technique_to_hit=1
 def ai_mode2():
   global hit_crd
   global c_fire
   global computer_fired
   global ai_attempts
   global c_grid
+  global second_hit
+  global technique_to_hit
   c_fire=[hit_crd[0],hit_crd[1]-1]
   if c_fire not in c_grid:
     ai_attempts=3
@@ -75,21 +85,28 @@ def ai_mode2():
     computer_fired.append(c_fire)
     c_grid.remove(c_fire)
     if player_ship1.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=2
     elif player_ship2.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=2
     elif player_ship3.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=2
     elif player_ship4.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=2
     elif player_ship5.hit(c_fire):
-      pass  
+     second_hit=True
+     technique_to_hit=2
 def ai_mode3():
   global hit_crd
   global c_fire
   global computer_fired
   global ai_attempts
   global c_grid
+  global second_hit
+  global technique_to_hit
   c_fire=[hit_crd[0]+1,hit_crd[1]]
   if c_fire not in c_grid:
     ai_attempts=4
@@ -99,21 +116,28 @@ def ai_mode3():
     computer_fired.append(c_fire)
     c_grid.remove(c_fire)
     if player_ship1.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=3
     elif player_ship2.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=3
     elif player_ship3.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=3
     elif player_ship4.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=3
     elif player_ship5.hit(c_fire):
-      pass  
+     second_hit=True
+     technique_to_hit=3
 def ai_mode4():
   global hit_crd
   global c_fire
   global computer_fired
   global ai_attempts
   global c_grid
+  global second_hit
+  global technique_to_hit
   c_fire=[hit_crd[0]-1,hit_crd[1]]
   if c_fire not in c_grid:
     ai_attempts=0
@@ -126,16 +150,21 @@ def ai_mode4():
     computer_fired.append(c_fire)
     c_grid.remove(c_fire)
     if player_ship1.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=4
     elif player_ship2.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=4
     elif player_ship3.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=4
     elif player_ship4.hit(c_fire):
-      pass
+      second_hit=True
+      technique_to_hit=4
     elif player_ship5.hit(c_fire):
-      pass      
-#grid formation
+     second_hit=True
+     technique_to_hit=4
+     #grid formation
 for x in xs:
   for y in ys:
     grid.append([x,y])
@@ -235,12 +264,15 @@ while ship_creation:
         print("Mistakes in coordinates place again. It errored")
 player_ships=5
 computer_ships=5 
+second_hit=False
+technique_to_hit=0
 print(c_Choices) 
 ai_attempts=0
 computer_fleet=[computer_ship1.sunk, computer_ship2.sunk, computer_ship3.sunk, computer_ship4.sunk, computer_ship5.sunk]
 player_fleet=[player_ship1.sunk,player_ship2.sunk,player_ship3.sunk,player_ship4.sunk,player_ship5.sunk]
 playing=True
 ai_mode=False 
+number_of_shots=0
 hit_crd=[]
 while playing:
   ii=ii+1
@@ -300,15 +332,20 @@ while playing:
     break
   if ai_mode == True:
     if current_player_ships > player_ships:
+      number_of_shots=0
       ai_mode=False
-    if ai_attempts==1:
-      ai_mode1()
-    elif ai_attempts==2:
-      ai_mode2()
-    elif ai_attempts==3:
-      ai_mode3()
-    elif ai_attempts==4:
-      ai_mode4() 
+    else:  
+      if second_hit ==False:  
+        if ai_attempts==1:
+          ai_mode1()
+        elif ai_attempts==2:
+          ai_mode2()
+        elif ai_attempts==3:
+          ai_mode3()
+        elif ai_attempts==4:
+          ai_mode4() 
+      else:
+        pass    
   else:  
     hit_crd=[]
     c_fire=[2,1]#random.choice(c_grid)
