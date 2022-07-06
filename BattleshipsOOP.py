@@ -123,74 +123,103 @@ class Ship_Factory_Tools:
             else:
                 return False   
     def check_for_duplication(fleet_location):
-        pass                                      
-
+        i=0
+        for location in fleet_location:
+            for crd in location:
+                for duplicate in fleet_location:
+                    if location == duplicate:
+                        i=i+1
+        if i == 17:
+            return True
+        else:
+            return False                
+class Fleet:
+    def __init__(self,destroyer_location,submarine_location,cruiser_location,battleship_location,carrier_location):
+        self.all_locations=[destroyer_location,submarine_location,cruiser_location,battleship_location,carrier_location]
 class Ship_Factory:
-    try:
-        while True:
-            player_destroyer=Destroyer("player",input("Enter the two coordinates for you destroyer seperated by a space: \n")) 
-            if Ship_Factory_Tools.check_for_size(player_destroyer.location,player_destroyer.size):
-                player_destroyer.location=Ship_Factory_Tools.convert_to_list(player_destroyer.location,player_destroyer.size)
-                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_destroyer.location,player_destroyer.size):
-                    break
+    correct_player_ships=False
+    correct_computer_ships=False
+    while correct_computer_ships == False:
+        computer_destroyer=Destroyer("computer",random.choice(Ship_Factory_Tools.combi2))
+        computer_submarine=Submarine("computer",random.choice(Ship_Factory_Tools.combi3))
+        computer_cruiser=Cruiser("computer",random.choice(Ship_Factory_Tools.combi3))
+        computer_battleship=Battleship("computer",random.choice(Ship_Factory_Tools.combi4))
+        computer_carrier=Carrier("computer",random.choice(Ship_Factory_Tools.combi5))
+        computer_fleet=Fleet(computer_destroyer.location,computer_submarine.location,computer_cruiser.location,computer_battleship.location,computer_carrier.location)
+        if Ship_Factory_Tools.check_for_duplication(computer_fleet.all_locations):
+            correct_computer_ships=True
+    print(computer_fleet.all_locations)
+    while correct_player_ships == False:
+        try:
+            while True:
+                player_destroyer=Destroyer("player",input("Enter the two coordinates for you destroyer seperated by a space: \n")) 
+                if Ship_Factory_Tools.check_for_size(player_destroyer.location,player_destroyer.size):
+                    player_destroyer.location=Ship_Factory_Tools.convert_to_list(player_destroyer.location,player_destroyer.size)
+                    if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_destroyer.location,player_destroyer.size):
+                        break
+                    else:
+                        print("Invalid location")
                 else:
-                    print("Invalid location")
-            else:
-                print("Invalid size")
-    except:
-        print("Invalid input")            
-    try:
-        while True:
-            player_submarine=Submarine("player",input("Enter the three coordinates for your submarine seperated by a space: \n"))
-            if Ship_Factory_Tools.check_for_size(player_submarine.location,player_submarine.size):
-                player_submarine.location=Ship_Factory_Tools.convert_to_list(player_submarine.location,player_submarine.size)
-                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_submarine.location,player_submarine.size):
-                    break
+                    print("Invalid size")
+        except:
+            print("Invalid input")            
+        try:
+            while True:
+                player_submarine=Submarine("player",input("Enter the three coordinates for your submarine seperated by a space: \n"))
+                if Ship_Factory_Tools.check_for_size(player_submarine.location,player_submarine.size):
+                    player_submarine.location=Ship_Factory_Tools.convert_to_list(player_submarine.location,player_submarine.size)
+                    if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_submarine.location,player_submarine.size):
+                        break
+                    else:
+                        print("Invalid location")
                 else:
-                    print("Invalid location")
-            else:
-                print("Invalid size")
-    except:
-        print("Invalid input")                 
-    try:
-        while True:
-            player_cruiser=Cruiser("player",input("Enter the three coordinates for your cruiser seperated by a space: \n"))
-            if Ship_Factory_Tools.check_for_size(player_cruiser.location,player_cruiser.size):
-                player_cruiser.location=Ship_Factory_Tools.convert_to_list(player_cruiser.location,player_cruiser.size)
-                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_cruiser.location,player_cruiser.size):
-                    break
+                    print("Invalid size")
+        except:
+            print("Invalid input")                 
+        try:
+            while True:
+                player_cruiser=Cruiser("player",input("Enter the three coordinates for your cruiser seperated by a space: \n"))
+                if Ship_Factory_Tools.check_for_size(player_cruiser.location,player_cruiser.size):
+                    player_cruiser.location=Ship_Factory_Tools.convert_to_list(player_cruiser.location,player_cruiser.size)
+                    if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_cruiser.location,player_cruiser.size):
+                        break
+                    else:
+                        print("Invalid location")
                 else:
-                    print("Invalid location")
-            else:
-                print("Invalid size")
-    except:
-        print("Invalid input")            
-    try:
-        while True:
-            player_battleship=Battleship("player",input("Enter the four coordinates for your battleship seperated by a space: \n"))
-            if Ship_Factory_Tools.check_for_size(player_battleship.location,player_battleship.size):
-                player_battleship.location=Ship_Factory_Tools.convert_to_list(player_battleship.location,player_battleship.size)
-                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_battleship.location,player_battleship.size):
-                    break
+                    print("Invalid size")
+        except:
+            print("Invalid input")            
+        try:
+            while True:
+                player_battleship=Battleship("player",input("Enter the four coordinates for your battleship seperated by a space: \n"))
+                if Ship_Factory_Tools.check_for_size(player_battleship.location,player_battleship.size):
+                    player_battleship.location=Ship_Factory_Tools.convert_to_list(player_battleship.location,player_battleship.size)
+                    if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_battleship.location,player_battleship.size):
+                        break
+                    else:
+                        print("Invalid location")
                 else:
-                    print("Invalid location")
-            else:
-                print("Invalid size")
-    except:
-        print("Invalid input")            
-    try:
-        while True:
-            player_carrier=Carrier("player",input("Enter the five coordinates for your carrier seperated by a space: \n"))
-            if Ship_Factory_Tools.check_for_size(player_carrier.location,player_carrier.size):
-                player_carrier.location=Ship_Factory_Tools.convert_to_list(player_carrier.location,player_carrier.size)
-                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_carrier.location,player_carrier.size):
-                    break
+                    print("Invalid size")
+        except:
+            print("Invalid input")            
+        try:
+            while True:
+                player_carrier=Carrier("player",input("Enter the five coordinates for your carrier seperated by a space: \n"))
+                if Ship_Factory_Tools.check_for_size(player_carrier.location,player_carrier.size):
+                    player_carrier.location=Ship_Factory_Tools.convert_to_list(player_carrier.location,player_carrier.size)
+                    if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_carrier.location,player_carrier.size):
+                        break
+                    else:
+                        print("Invalid location")
                 else:
-                    print("Invalid location")
-            else:
-                print("Invalid size")
-    except:
-        print("Invalid input")            
+                    print("Invalid size")
+        except:
+            print("Invalid input") 
+        player_fleet=Fleet(player_destroyer.location,player_submarine.location,player_cruiser.location,player_battleship.location,player_carrier.location) 
+        if Ship_Factory_Tools.check_for_duplication(player_fleet.all_locations):
+            correct_player_ships=True
+        else:
+            print("Duplicate location")               
 class Grid:  # Grid class
     grid_locations=[]  
     for x in range(1,11):
