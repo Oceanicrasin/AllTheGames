@@ -11,15 +11,7 @@ class Ship:
         self.controller=controller
         self.location = location
         self.sunk = False
-        if self.controller == "player":
-          locations=self.location.split()
-          i=0
-          for counter in locations:
-              locations[i]=int(locations[i])
-              i=i+1
-          self.location=[]
-          for counter in range(0,self.size*2,+2):
-              self.location.append([locations[counter],locations[counter+1]])
+        
 
     def hit(self,fired_position):
         if fired_position in self.location:
@@ -31,69 +23,208 @@ class Ship:
         else:
             return False   
 class Destroyer(Ship):
-    combi2=[]
-    for xx in range(1, 11):
-        for yy in range(1, 10):
-         combi2.append([[xx, yy], [xx, yy + 1]])
-    for yy in range(1,11):
-        for xx in range(1,10):
-            combi2.append([[xx, yy], [xx + 1, yy]])   
+    size=2
+    validLocation=False
     def __init__(self, controller, location):
-        super().__init__(controller, 2, location) 
+        self.location = location
+        super().__init__(controller, self.size, self.location)
+
 
 class Submarine(Ship):
-    combi3=[]
-    for xx in range(1, 11):
-        for yy in range(1, 9):
-            combi3.append([[xx, yy], [xx, yy + 1], [xx, yy + 2]])
-    for yy in range(1,11):
-      for xx in range(1,9):
-        combi3.append([[xx, yy], [xx + 1, yy], [xx + 2, yy]])
+    size=3
+    validLocation=False
     def __init__(self, controller, location):
-        super().__init__(controller, 3, location) 
+        super().__init__(controller, self.size, location) 
+        if controller=="player":
+            if len(self.location)==11:
+                self.location=Ship_Factory_Tools.convert_to_list(self,self.location,self.size)
+                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,self.location,self.size):
+                    self.validLocation=True      
 
 class Cruiser(Ship):
+    size=3
+    validLocation=False
+    def __init__(self, controller, location):
+        super().__init__(controller, self.size, location) 
+        if controller=="player":
+            if len(self.location)==11:
+                self.location=Ship_Factory_Tools.convert_to_list(self,self.location,self.size)
+                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,self.location,self.size):
+                    self.validLocation=True           
+
+class Battleship(Ship):
+    size=4
+    def __init__(self, controller, location):
+        super().__init__(controller, self.size, location)   
+        if controller=="player":
+            if len(self.location)==11:
+                self.location=Ship_Factory_Tools.convert_to_list(self,self.location,self.size)
+                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,self.location,self.size):
+                    self.validLocation=True      
+
+class Carrier(Ship):
+    size=5
+    def __init__(self, controller, location):
+        super().__init__(controller, self.size, location)  
+        if controller=="player":
+            if len(self.location)==11:
+                self.location=Ship_Factory_Tools.convert_to_list(self,self.location,self.size)
+                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,self.location,self.size):
+                    self.validLocation=True      
+                                      
+
+class Ship_Factory_Tools:
+    combi2=[]
     combi3=[]
+    combi4=[]
+    combi5=[]
+    for xx in range(1, 11):
+        for yy in range(1, 10):
+            combi2.append([[xx, yy], [xx, yy + 1]])
+    for yy in range(1,11):
+        for xx in range(1,10):
+            combi2.append([[xx, yy], [xx + 1, yy]])  
+
     for xx in range(1, 11):
         for yy in range(1, 9):
             combi3.append([[xx, yy], [xx, yy + 1], [xx, yy + 2]])
     for yy in range(1,11):
       for xx in range(1,9):
-        combi3.append([[xx, yy], [xx + 1, yy], [xx + 2, yy]])
-    def __init__(self, controller, location):
-        super().__init__(controller, 3, location)       
+        combi3.append([[xx, yy], [xx + 1, yy], [xx + 2, yy]])  
 
-
-class Battleship(Ship):
-    combi4=[]
     for xx in range(1, 11):
         for yy in range(1, 8):
             combi4.append([[xx, yy], [xx, yy + 1], [xx, yy + 2],[xx, yy + 3]])
     for yy in range(1,11):
       for xx in range(1,8):
-        combi4.append([[xx, yy], [xx + 1, yy], [xx + 2, yy],[xx + 3, yy]])
-    def __init__(self, controller, location):
-        super().__init__(controller, 4, location)        
+        combi4.append([[xx, yy], [xx + 1, yy], [xx + 2, yy],[xx + 3, yy]])  
 
-class Carrier(Ship):
-    combi5=[]
     for xx in range(1, 11):
         for yy in range(1, 7):
             combi5.append([[xx, yy], [xx, yy + 1], [xx, yy + 2],[xx, yy + 3],[xx, yy + 4]])
     for yy in range(1,11):
       for xx in range(1,7):
-        combi5.append([[xx, yy], [xx + 1, yy], [xx + 2, yy],[xx + 3, yy],[xx + 4, yy]])
-    def __init__(self, controller, location):
-        super().__init__(controller, 4, location)                          
+        combi5.append([[xx, yy], [xx + 1, yy], [xx + 2, yy],[xx + 3, yy],[xx + 4, yy]])                
 
+    def check_for_size(location,size):
+        if len(location)==size*4-1:
+            return True
+        else:
+            return False
+    def convert_to_list(locations,size):
+        location=locations.split()
+        i=0
+        locations=[]
+        for counter in location:
+            location[i]=int(location[i])
+            i=i+1
+        for counter in range(0,size*2,+2):
+              locations.append([location[counter],location[counter+1]])    
+        return locations
 
+    def check_for_valid_location(self,location,size):
+        if size ==2:
+            if location in self.combi2:
+                return True
+            else:
+                return False    
+        elif size ==3:
+            if location in self.combi3:
+                return True
+            else:
+                return False 
+        elif size ==4:
+            if location in self.combi4:
+                return True
+            else:
+                return False   
+        elif size ==5:
+            if location in self.combi5:
+                return True
+            else:
+                return False   
+    def check_for_duplication(fleet_location):
+        pass                                      
 
-   
+class Ship_Factory:
+    try:
+        while True:
+            player_destroyer=Destroyer("player",input("Enter the two coordinates for you destroyer seperated by a space: \n")) 
+            if Ship_Factory_Tools.check_for_size(player_destroyer.location,player_destroyer.size):
+                player_destroyer.location=Ship_Factory_Tools.convert_to_list(player_destroyer.location,player_destroyer.size)
+                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_destroyer.location,player_destroyer.size):
+                    break
+                else:
+                    print("invalid location")
+            else:
+                print("Invalid location")
+    except:
+        print("Invalid location")            
+    try:
+        while True:
+            player_submarine=Submarine("player",input("Enter the three coordinates for your submarine seperated by a space: \n"))
+            if Ship_Factory_Tools.check_for_size(player_submarine.location,player_submarine.size):
+                player_submarine.location=Ship_Factory_Tools.convert_to_list(player_submarine.location,player_submarine.size)
+                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_submarine.location,player_submarine.size):
+                    break
+                else:
+                    print("invalid location")
+            else:
+                print("Invalid location")
+    except:
+        print("Invalid location")      
+    try:
+        while True:
+            player_cruiser=Cruiser("player",input("Enter the three coordinates for your cruiser seperated by a space: \n"))
+            if Ship_Factory_Tools.check_for_size(player_cruiser.location,player_cruiser.size):
+                player_cruiser.location=Ship_Factory_Tools.convert_to_list(player_cruiser.location,player_cruiser.size)
+                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_cruiser.location,player_cruiser.size):
+                    break
+                else:
+                    print("invalid location")
+            else:
+                print("Invalid location")
+    except:
+        print("Invalid location")   
+    try:
+        while True:
+            player_battleship=Battleship("player",input("Enter the four coordinates for your battleship seperated by a space: \n"))
+            if Ship_Factory_Tools.check_for_size(player_battleship.location,player_battleship.size):
+                player_battleship.location=Ship_Factory_Tools.convert_to_list(player_battleship.location,player_battleship.size)
+                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_battleship.location,player_battleship.size):
+                    break
+                else:
+                    print("invalid location")
+            else:
+                print("Invalid location")
+    except:
+        print("Invalid location")
+    try:
+        while True:
+            player_carrier=Carrier("player",input("Enter the five coordinates for your carrier seperated by a space: \n"))
+            if Ship_Factory_Tools.check_for_size(player_carrier.location,player_carrier.size):
+                player_carrier.location=Ship_Factory_Tools.convert_to_list(player_carrier.location,player_carrier.size)
+                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_carrier.location,player_carrier.size):
+                    break
+                else:
+                    print("invalid location")
+            else:
+                print("Invalid location")
+    except:
+        print("Invalid location")
 class Grid:  # Grid class
     grid_locations=[]  
     for x in range(1,11):
         for y in range(1,11):
             grid_locations.append([x,y])     
    
-g=Destroyer("player","1 2 1 3")
-print(g.location)            
+g=Destroyer("player","1 1 1 2")
+print(g.validLocation)  
+h="1 1 1 3"
+print(len(h))   
+h="1 1 1 3 1 2"
+print(len(h))
+h="1 1 1 3 1 2 1 3"
+print(len(h))    
+h="1 1 1 3 1 2 1 3 1 4"
+print(len(h))        
