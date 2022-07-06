@@ -35,44 +35,23 @@ class Submarine(Ship):
     validLocation=False
     def __init__(self, controller, location):
         super().__init__(controller, self.size, location) 
-        if controller=="player":
-            if len(self.location)==11:
-                self.location=Ship_Factory_Tools.convert_to_list(self,self.location,self.size)
-                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,self.location,self.size):
-                    self.validLocation=True      
 
 class Cruiser(Ship):
     size=3
     validLocation=False
     def __init__(self, controller, location):
-        super().__init__(controller, self.size, location) 
-        if controller=="player":
-            if len(self.location)==11:
-                self.location=Ship_Factory_Tools.convert_to_list(self,self.location,self.size)
-                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,self.location,self.size):
-                    self.validLocation=True           
+        super().__init__(controller, self.size, location)      
 
 class Battleship(Ship):
     size=4
     def __init__(self, controller, location):
         super().__init__(controller, self.size, location)   
-        if controller=="player":
-            if len(self.location)==11:
-                self.location=Ship_Factory_Tools.convert_to_list(self,self.location,self.size)
-                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,self.location,self.size):
-                    self.validLocation=True      
 
 class Carrier(Ship):
     size=5
     def __init__(self, controller, location):
         super().__init__(controller, self.size, location)  
-        if controller=="player":
-            if len(self.location)==11:
-                self.location=Ship_Factory_Tools.convert_to_list(self,self.location,self.size)
-                if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,self.location,self.size):
-                    self.validLocation=True      
                                       
-
 class Ship_Factory_Tools:
     combi2=[]
     combi3=[]
@@ -155,11 +134,11 @@ class Ship_Factory:
                 if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_destroyer.location,player_destroyer.size):
                     break
                 else:
-                    print("invalid location")
+                    print("Invalid location")
             else:
-                print("Invalid location")
+                print("Invalid size")
     except:
-        print("Invalid location")            
+        print("Invalid input")            
     try:
         while True:
             player_submarine=Submarine("player",input("Enter the three coordinates for your submarine seperated by a space: \n"))
@@ -168,11 +147,11 @@ class Ship_Factory:
                 if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_submarine.location,player_submarine.size):
                     break
                 else:
-                    print("invalid location")
+                    print("Invalid location")
             else:
-                print("Invalid location")
+                print("Invalid size")
     except:
-        print("Invalid location")      
+        print("Invalid input")                 
     try:
         while True:
             player_cruiser=Cruiser("player",input("Enter the three coordinates for your cruiser seperated by a space: \n"))
@@ -181,11 +160,11 @@ class Ship_Factory:
                 if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_cruiser.location,player_cruiser.size):
                     break
                 else:
-                    print("invalid location")
+                    print("Invalid location")
             else:
-                print("Invalid location")
+                print("Invalid size")
     except:
-        print("Invalid location")   
+        print("Invalid input")            
     try:
         while True:
             player_battleship=Battleship("player",input("Enter the four coordinates for your battleship seperated by a space: \n"))
@@ -194,11 +173,11 @@ class Ship_Factory:
                 if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_battleship.location,player_battleship.size):
                     break
                 else:
-                    print("invalid location")
+                    print("Invalid location")
             else:
-                print("Invalid location")
+                print("Invalid size")
     except:
-        print("Invalid location")
+        print("Invalid input")            
     try:
         while True:
             player_carrier=Carrier("player",input("Enter the five coordinates for your carrier seperated by a space: \n"))
@@ -207,24 +186,13 @@ class Ship_Factory:
                 if Ship_Factory_Tools.check_for_valid_location(Ship_Factory_Tools,player_carrier.location,player_carrier.size):
                     break
                 else:
-                    print("invalid location")
+                    print("Invalid location")
             else:
-                print("Invalid location")
+                print("Invalid size")
     except:
-        print("Invalid location")
+        print("Invalid input")            
 class Grid:  # Grid class
     grid_locations=[]  
     for x in range(1,11):
         for y in range(1,11):
             grid_locations.append([x,y])     
-   
-g=Destroyer("player","1 1 1 2")
-print(g.validLocation)  
-h="1 1 1 3"
-print(len(h))   
-h="1 1 1 3 1 2"
-print(len(h))
-h="1 1 1 3 1 2 1 3"
-print(len(h))    
-h="1 1 1 3 1 2 1 3 1 4"
-print(len(h))        
