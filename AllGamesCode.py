@@ -1,7 +1,6 @@
 import random
-
-while True:
-  try:
+import re
+def main():
     print("1. Guess the number game")
     print("2. Rock,paper scissors")
     print("3. Pass the pigs")
@@ -15,131 +14,11 @@ while True:
     print("11. Magic 8 ball")
     print("12. Mastermind") 
     print("13. Fizz")
-    while True:
-      try:
-        number = int(input("Enter the game number you want: "))
-        break
-      except:
-        print("Invalid data try again")
+    number = get_int("Enter the game number you want: ")
     if number == 1:
-          print("Welcome to guess the number game")
-          while True:
-            try:         
-              first = int(input("Enter the number you want the generator to start at: "))
-              last = int(input("Enter the number you want the generator to end at: "))
-              number = random.randint(first, last)
-              break
-            except:
-              print("Invalid data enter again")  
-          i = 0
-          while True:
-              i = 1 + i
-              print("Guess", i)
-              guess = int(input("Enter your guess: "))
-              if guess == number:
-                  print("correct")
-                  break
-              if guess > number:
-                  print("too high")
-              if guess < number:
-                  print("too low")
-       
+        guess_the_number_game()
     elif number == 2:
-          print("Welcome to rock paper scissors")
-          c_number = 0
-          c_score = 0
-          p_number = 0
-          p_score = 0
-          i = 1
-          idk = ["rock", "scissors", "paper"]
-      
-          def rpcLogic():
-              global i
-              global c_number
-              global c_score
-              global p_number
-              global p_number
-              global p_score
-              print("Round", i)
-              c_choice = random.choice(idk)
-              if c_choice == "rock":
-                  c_number = 1
-              elif c_choice == "scissors":
-                  c_number = 2
-              elif c_choice == "paper":
-                  c_number = 3
-              while True:
-                try:
-                  p_choice = input("Enter your choice: rock paper or scissors: ")
-                  break
-                except:
-                  print("Invalid data enter again")
-              if p_choice == "rock":
-                  p_number = 1
-              elif p_choice == "scissors":
-                  p_number = 2
-              elif p_choice == "paper":
-                  p_number = 3
-              if c_choice == p_choice:
-                  print("The computer chose", c_choice)
-                  print("No one gets a point")
-              elif c_number == 1 and p_number == 2:
-                  print("The computer chose", c_choice)
-                  print("computer gets a point")
-                  c_score = c_score + 1
-              elif c_number == 3 and p_number == 1:
-                  print("The computer chose", c_choice)
-                  print("computer gets a point")
-                  c_score = c_score + 1
-              elif c_number == 2 and p_number == 3:
-                  print("The computer chose", c_choice)
-                  print("computer gets a point")
-                  c_score = c_score + 1
-              elif c_number == 2 and p_number == 1:
-                  print("The computer chose", c_choice)
-                  print("player gets a point")
-                  p_score = p_score + 1
-              elif c_number == 1 and p_number == 3:
-                  print("The computer chose", c_choice)
-                  print("player gets a point")
-                  p_score = p_score + 1
-              elif c_number == 3 and p_number == 2:
-                  print("The computer chose", c_choice)
-                  print("player gets a point")
-                  p_score = p_score + 1
-              i = i + 1
-      
-          pr = input("Do you want to play by rounds or points: ")
-          if pr == "rounds" :
-            while True:
-              try:
-                round_count = int(input("Enter how many rounds you want to play: "))
-                while i <= round_count:
-                  rpcLogic()
-                if round_count<1:
-                  print("invalid data try again")
-                else:
-                  break
-              except:
-                print("Invalid data try again")
-          else:
-             while True:
-              try:
-                round_count = int(input("Enter how many points you want to play to: "))
-                if round_count<1:
-                  print("invalid data try again")
-                else:
-                  break
-              except:
-                print("Invalid data try again")       
-     #     while p_score < round_count and c_score < round_count:
-     #             rpcLogic()
-          if p_score == c_score:
-              print("Draw")
-          elif p_score < c_score:
-              print("You lose")
-          else:
-              print("You win")
+        rock_paper_scissors_game()
     elif number == 3:
       while True:
         try:
@@ -830,19 +709,17 @@ while True:
       correct=0
       wrong=0
       while True:
-        try:
-          while True:
-            rounds=int(input("How many rounds do you want to play: "))
-            if rounds<1:
-              print("Invalid data try again")
-            else:break  
-          break
-        except:
-              print("Invalid data try again")
+        rounds=get_int("How many rounds do you want to play: ")
+        if rounds<1:
+          print("Invalid data try again")
+        else:
+            break  
+
       for counter in range(rounds):
         options=["tails","heads"]
         CC = random.choice(options)
-        PC = input("enter what you predict the coin flip will be \n heads \n tails \n")
+        PC = get_string("enter what you predict the coin flip will be \n heads \n tails \n").lower()
+        print(CC)
         if CC == PC:
          print("you guessed right") 
          correct=correct+1 
@@ -934,7 +811,7 @@ while True:
       if opt == 5:
        print("You may rely on it.")
       if opt == 6:
-       print(" As I see it, yes")
+       print(" As I see it, yes")
       if opt == 7:
        print("Most likely.")
       if opt == 8:
@@ -1019,11 +896,11 @@ while True:
                     ii=ii+1
                   i=i+1
                 print(f"You have {ii} numbers correct")  
-            guessCount=guessCount+1          
-            break
+                guessCount=guessCount+1          
+                break
           except:
             print("Invalid data try again")
-
+    
     elif number == 13:
       print("Welcome to Fizz")
       numbers = int(input("Enter how many numbers you want to play with: \n"))
@@ -1056,16 +933,130 @@ while True:
         else:
           print("You failed")
           print(f"You survived {i} rounds")
-          break
 
-  except:
-    print("I regret to inform you that your code has an error in it")
-    print("Don't worry press enter to go back to the main menu")
-    print("Sound like a place I should say Game over")
-    print("Let me remind you this message only pops up for run time errors not synatx errors")
-    print("Maybe you converted to int on accident or forgot? It's possible that you inputed the wrong thing")
-    print("Don't you love how the extra indentations need for this makes the code look like a highway")
-    print("Thank you for reading this definitly written by python error")
-    print("You moron your code has a fricking error")
-    
-    input()
+def get_int(text):
+    while True:
+        try:
+            n = int(input(text))
+            return n
+        except:
+            print("Invalid number enter again")
+            
+            
+def get_float(text):
+    while True:
+        try:
+            n = float(input(text))
+            return n
+        except:
+            print("Invalid number enter again")      
+            
+            
+def get_string(text):
+    while True:
+        try:
+            s = input(text)
+            return s
+        except:
+            print("Invalid text enter again")  
+            
+def guess_the_number_game():
+    print("Welcome to guess the number game")
+    first = get_int("Enter the number you want the generator to start at: ")
+    last = get_int("Enter the number you want the generator to end at: ")
+    number = random.randint(first, last)
+    i = 0
+    while True:
+      i += 1
+      print("Guess", i)
+      guess = int(input("Enter your guess: "))
+      if guess == number:
+          print("correct")
+          break
+      if guess > number:
+          print("too high")
+      if guess < number:
+          print("too low")
+          
+def rock_paper_scissors_game():
+      print("Welcome to rock paper scissors")
+      c_number = 0
+      c_score = 0
+      p_number = 0
+      p_score = 0
+      i = 1
+      options = ["rock", "scissors", "paper"]
+  
+      def rpcLogic():
+          global i
+          global c_number
+          global c_score
+          global p_number
+          global p_number
+          global p_score
+          print("Round", i)
+          c_number = random.randint(1,3)
+          p_number = get_int("Enter your choice: 1.rock 2.paper 3.scissors: ")
+          if c_choice == p_choice:
+              print("The computer chose", c_choice)
+              print("No one gets a point")
+          elif c_number == 1 and p_number == 2:
+              print("The computer chose", c_choice)
+              print("computer gets a point")
+              c_score = c_score + 1
+          elif c_number == 3 and p_number == 1:
+              print("The computer chose", c_choice)
+              print("computer gets a point")
+              c_score = c_score + 1
+          elif c_number == 2 and p_number == 3:
+              print("The computer chose", c_choice)
+              print("computer gets a point")
+              c_score = c_score + 1
+          elif c_number == 2 and p_number == 1:
+              print("The computer chose", c_choice)
+              print("player gets a point")
+              p_score = p_score + 1
+          elif c_number == 1 and p_number == 3:
+              print("The computer chose", c_choice)
+              print("player gets a point")
+              p_score = p_score + 1
+          elif c_number == 3 and p_number == 2:
+              print("The computer chose", c_choice)
+              print("player gets a point")
+              p_score = p_score + 1
+          i = i + 1
+  
+      pr = input("Do you want to play by rounds or points: ")
+      if pr == "rounds" :
+        while True:
+          try:
+            round_count = int(input("Enter how many rounds you want to play: "))
+            while i <= round_count:
+              rpcLogic()
+            if round_count<1:
+              print("invalid data try again")
+            else:
+              break
+          except:
+            print("Invalid data try again")
+      else:
+         while True:
+          try:
+            round_count = int(input("Enter how many points you want to play to: "))
+            if round_count<1:
+              print("invalid data try again")
+            else:
+              break
+          except:
+            print("Invalid data try again")       
+ #     while p_score < round_count and c_score < round_count:
+ #             rpcLogic()
+      if p_score == c_score:
+          print("Draw")
+      elif p_score < c_score:
+          print("You lose")
+      else:
+          print("You win")
+          
+          
+main()        
